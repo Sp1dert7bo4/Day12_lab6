@@ -50,12 +50,12 @@ cp .env.example .env
 docker compose up
 
 # 3. Test
-curl http://localhost/health
+curl http://localhost:8000/health
 
 # 4. Lấy API key từ .env, test endpoint
 API_KEY=$(grep AGENT_API_KEY .env | cut -d= -f2)
 curl -H "X-API-Key: $API_KEY" \
-     -X POST http://localhost/ask \
+     -X POST http://localhost:8000/ask \
      -H "Content-Type: application/json" \
      -d '{"question": "What is deployment?"}'
 ```
@@ -91,10 +91,18 @@ railway domain
 
 ---
 
-## Kiểm Tra Production Readiness
+## 5. Kiểm Tra Chấm Điểm Lab (Production Readiness)
 
+Để hoàn thành bài lab và lấy kết quả 100% check passed, hãy chạy lệnh sau:
+
+**Nếu dùng Bash/Linux/Mac:**
 ```bash
 python check_production_ready.py
 ```
 
-Script này kiểm tra tất cả items trong checklist và báo cáo những gì còn thiếu.
+**Nếu dùng PowerShell trên Windows (để không bị lỗi hiển thị dấu ✅):**
+```powershell
+$env:PYTHONIOENCODING="utf-8"; python check_production_ready.py
+```
+
+Script này sẽ tự động kiểm tra toàn bộ tiêu chuẩn của bài Lab (từ cấu hình Docker, tính năng bảo mật, API Endpoints) và in ra báo cáo. (Bạn cần đạt 20/20 ✅ 100%).
